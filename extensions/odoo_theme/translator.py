@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-import os.path
-import posixpath
-import re
 
+import sphinx
+
+from distutils.version import LooseVersion
 from docutils import nodes
-from sphinx import addnodes, util, builders
 from sphinx.locale import admonitionlabels
 from sphinx.writers.html5 import HTML5Translator
 #from urllib.request import url2pathname
@@ -150,7 +149,8 @@ class BootstrapTranslator(HTML5Translator):
         # type: (nodes.Node) -> None
         self.generate_targets_for_table(node)
 
-        self._table_row_index = 0
+        # c/p of https://github.com/pydata/pydata-sphinx-theme/pull/509/files
+        self._table_row_indices.append(0)
 
         classes = [cls.strip(u' \t\n')
                    for cls in self.settings.table_style.split(',')]
